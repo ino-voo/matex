@@ -21,7 +21,7 @@ jobs:
     - name: Deploy to VPS
       run: |
         ssh -o StrictHostKeyChecking=no root@5.161.59.143 '
-          cd /ruta/al/modulo/odoo &&
+          cd /odoo/custom/addons/custom &&
           git pull origin main &&
           # Aquí puedes agregar cualquier comando adicional necesario para reiniciar el servicio de Odoo o actualizar el módulo.
           sudo systemctl restart odoo'
