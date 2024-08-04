@@ -8,12 +8,6 @@ import xmlrpc.client
 class PurchaseOrder(models.Model):
     _inherit = 'purchase.order'
 
-    # product_id = fields.Many2one('product.product', string='Product', compute='_compute_product_id')
-
-    # @api.multi
-    # def _compute_product_id(self):
-    #     for order in self:
-    #         order.product_id = order.order_line.product_id
 
     def send_and_create_purchase_order(self):
         # Odoo credentials
