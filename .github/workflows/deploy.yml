@@ -21,6 +21,6 @@ jobs:
     - name: Deploy to VPS
       run: |
         ssh -o StrictHostKeyChecking=no root@5.161.59.143 '
-          cd /odoo/custom/addons/custom &&
+          cd /odoo/custom/addons/custom/matex &&
           git pull origin main &&
           sudo systemctl restart odoo'
