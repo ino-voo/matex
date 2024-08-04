@@ -16,9 +16,6 @@ class PurchaseOrder(models.Model):
     #         order.product_id = order.order_line.product_id
 
     def send_and_create_purchase_order(self):
-
-
-
         # Odoo credentials
         url = 'https://grupobibo.odoo.com'
         db = 'grupobibo-15-0-5869337'
