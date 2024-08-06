@@ -11,7 +11,7 @@ class AccountMove(models.Model):
         res = super(AccountMove, self).action_post()
         for move in self:
             for line in move.invoice_line_ids:
-                if line.quantity == 0:
+                if line.price_unit == 0:
                     raise UserError(_('No es posible generar facturas con cantidad 0!'))
         return res
 
