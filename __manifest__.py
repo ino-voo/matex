@@ -5,9 +5,11 @@
     "summary": "Matex Customization",
     "depends": [
         "purchase",
+        "sale",
     ],
     "data": [
         "views/purchase_views.xml",
+        "views/sale_order_views.xml",
         ],
     "installable": True,
     "license": "AGPL-3",

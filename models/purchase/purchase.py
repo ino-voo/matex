@@ -32,9 +32,16 @@ class PurchaseOrder(models.Model):
         models = xmlrpc.client.ServerProxy('{}/xmlrpc/2/object'.format(url))
         
         # Example: Search for records
-        records = models.execute_kw(db, uid, password, 'purchase.order', 'search', 
-            [[['id', '=', 157916]], {'company_id': 1}])
 
-        print(records)
+        # models.execute_kw(db, uid, password, 'res.users', 'write',
+        #                         [[54], {'company_id': 1}])
+
+        sales = models.execute_kw(db, uid, password, 'sale.order', 'search_read',
+                                            [[['id', '=', 157916]]])
+
+        # records = models.execute_kw(db, uid, password, 'purchase.order', 'search', 
+        #     [[['id', '=', 157916]], {'company_id': 1}])
+
+        print('purchases', sales)
 
 
