@@ -11,6 +11,30 @@
                 <xpath expr="//field[@name='partner_shipping_id']" position="attributes">
                     <attribute name="domain">[('parent_id', '=', partner_id)]</attribute>
                 </xpath>
+                <xpath expr="//field[@name='payment_term_id']" position="attributes">
+                    <attribute name="readonly">1</attribute>
+                    <attribute name="force_save">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='validity_date']" position="attributes">
+                    <attribute name="required">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='commitment_date']" position="attributes">
+                    <attribute name="required">1</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="sale_margin_sale_order_matex" model="ir.ui.view">
+            <field name="name">sale.order.margin.view.form.matex</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale_margin.sale_margin_sale_order"/>
+            <field name="arch" type="xml">
+                <xpath expr="//label[@for='margin']" position="attributes">
+                    <attribute name="groups">account.group_account_manager</attribute>
+                </xpath>
+                <xpath expr="//div[@hasclass='text-nowrap']" position="attributes">
+                    <attribute name="groups">account.group_account_manager</attribute>
+                </xpath>
             </field>
         </record>
     </data>

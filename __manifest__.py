@@ -4,8 +4,10 @@
     "version": "17.0.0.0.1",
     "summary": "Matex Customization",
     "depends": [
+        "account",
         "purchase",
         "sale",
+        "sale_margin",
     ],
     "data": [
         "views/purchase_views.xml",
