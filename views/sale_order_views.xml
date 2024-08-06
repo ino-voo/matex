@@ -32,9 +32,9 @@
                 <xpath expr="//label[@for='margin']" position="attributes">
                     <attribute name="groups">account.group_account_manager</attribute>
                 </xpath>
-                <xpath expr="//div[@hasclass='text-nowrap']" position="attributes">
+                <!-- <xpath expr="//div[@hasclass='text-nowrap']" position="attributes">
                     <attribute name="groups">account.group_account_manager</attribute>
-                </xpath>
+                </xpath> -->
             </field>
         </record>
     </data>
