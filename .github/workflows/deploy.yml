@@ -23,9 +23,6 @@ jobs:
         ssh -o StrictHostKeyChecking=no ${{ secrets.VPS }} '
           cd /odoo/custom/addons/custom/matex &&
           git pull origin main &&
-          sudo service odoo-server stop'
-    - name: Deploy Odoo
-      run: |
-        ssh -o StrictHostKeyChecking=no ${{ secrets.VPS }} '
+          sudo service odoo-server stop &&
           cd /odoo/odoo-server && sudo -u odoo ./odoo-bin -c /etc/odoo-server.conf -u ${{ secrets.PROJECT_MODULE }} -d ${{ secrets.DB_NAME }} --stop-after-init && 
           sudo service odoo-server start && exit'
