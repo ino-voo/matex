@@ -6,7 +6,7 @@
             <field name="inherit_id" ref="purchase.purchase_order_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//button[@name='button_unlock']" position="after">
-                    <button name="send_and_create_purchase_order" string="Send and create purchase order" type="object" class="oe_highlight"/>
+                    <button name="send_and_create_purchase_order" confirm="Estas seguro de mandar esta PO a BIBO?" string="Enviar Bibo" type="object" class="oe_highlight"/>
                 </xpath>
             </field>
         </record>
