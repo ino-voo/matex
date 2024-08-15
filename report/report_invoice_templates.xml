@@ -68,43 +68,57 @@
                             <span t-if="o.name != '/'" t-field="o.name">INV/2023/0001</span>
                         </h2>
                         <div class="oe_structure"></div>
-                        <div id="informations" class="row mt-3 mb-1">
-                            <div t-attf-class="#{'col-auto col-3 mw-100' if report_type != 'html' else 'col'} mb-2" t-if="o.invoice_date" name="invoice_date">
-                                <t t-if="o.move_type == 'out_invoice'"><strong>Fecha Factura:</strong></t>
-                                <t t-elif="o.move_type == 'out_refund'"><strong>Fecha de Nota de crédito:</strong></t>
-                                <t t-elif="o.move_type == 'out_receipt'"><strong>Receipt Date:</strong></t>
-                                <t t-else=""><strong>Date:</strong></t><br/>
-                                <span t-field="o.invoice_date">2023-09-12</span>
-                            </div>
-                            <div t-attf-class="#{'col-auto col-3 mw-100' if report_type != 'html' else 'col'} mb-2" t-if="o.invoice_date_due and o.move_type == 'out_invoice' and o.state == 'posted'" name="due_date">
-                                <strong>Fecha limite:</strong><br/>
-                                <span t-field="o.invoice_date_due">2023-10-31</span>
-                            </div>
-                            <!-- <div t-attf-class="#{'col-auto col-3 mw-100' if report_type != 'html' else 'col'} mb-2" t-if="o.delivery_date" name="delivery_date">
-                                <strong>Delivery Date:</strong><br/>
-                                <span t-field="o.delivery_date">2023-09-25</span>
-                            </div> -->
-                            <div t-attf-class="#{'col-auto col-3 mw-100' if report_type != 'html' else 'col'} mb-2" t-if="o.invoice_origin" name="origin">
-                                <strong>Origen:</strong><br/>
-                                <span t-field="o.invoice_origin">SO123</span>
-                            </div>
-                            <div t-attf-class="#{'col-auto col-3 mw-100' if report_type != 'html' else 'col'} mb-2" t-if="o.partner_id.ref" name="customer_code">
-                                <strong>Customer Code:</strong><br/>
-                                <span t-field="o.partner_id.ref"/>
-                            </div>
-                            <div t-attf-class="#{'col-auto col-3 mw-100' if report_type != 'html' else 'col'} mb-2" t-if="o.ref" name="reference">
-                                <strong>Reference:</strong><br/>
-                                <span t-field="o.ref">INV/2023/00001</span>
-                            </div>
-                            <div t-attf-class="#{'col-auto col-3 mw-100' if report_type != 'html' else 'col'} mb-2" t-if="o.invoice_incoterm_id" name="incoterm_id">
-                                <strong>Incoterm:</strong><br/>
-                                <p t-if="o.incoterm_location">
-                                    <span t-field="o.invoice_incoterm_id.code"/> <br/>
-                                    <span t-field="o.incoterm_location"/>
-                                </p>
-                                <span t-else="" t-field="o.invoice_incoterm_id.code" class="m-0"/>
-                            </div>
-                        </div>
+                        
+                        <t t-set="cfdi_values" t-value="o._l10n_mx_edi_get_extra_invoice_report_values()"/>        
+                        <table class="table table-sm o_main_table table-borderless" name="invoice_line_table">
+                            <tr>
+                                <td name="invoice_date" t-if="o.invoice_date" class="text-start">
+                                    <t t-if="o.move_type == 'out_invoice'"><strong>Fecha Factura:</strong></t>
+                                    <t t-elif="o.move_type == 'out_refund'"><strong>Fecha de Nota de crédito:</strong></t>
+                                    <t t-elif="o.move_type == 'out_receipt'"><strong>Receipt Date:</strong></t>
+                                    <t t-else=""><strong>Fecha:</strong></t>
+                                </td>
+                                <td name="invoice_date" t-if="o.invoice_date">
+                                    <span t-field="o.invoice_date">2023-09-12</span>
+                                </td>
+
+                                <td name="usage">
+                                    <strong>Uso de CFDI:</strong>
+                                </td>
+                                <td>
+                                    <span t-out="cfdi_values['usage']">S01 - Without fiscal effects</span><span> - </span><span t-field="o.l10n_mx_edi_usage">S01</span>
+                                </td>
+                            </tr>
+                            
+                            <tr>
+                                <td name="due_date" t-if="o.invoice_date_due and o.move_type == 'out_invoice' and o.state == 'posted'" class="text-start">
+                                    <strong>Fecha limite:</strong>
+                                </td>
+                                <td name="invoice_date_due" t-if="o.invoice_date_due">
+                                    <span t-field="o.invoice_date_due">2023-09-12</span>
+                                </td>
+                                <td name="payment_way" class="text-start">
+                                    <strong>Forma de Pago:</strong>
+                                </td>
+                                <td name="invoice_date_due" t-if="o.invoice_date_due">
+                                    <span t-out="cfdi_values['payment_way']">01 - Efectivo</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td name="origin">
+                                     <strong>Origen:</strong>
+                                </td>
+                                <td>
+                                    <span t-field="o.invoice_origin">SO123</span>
+                                </td>
+                                <td name="payment_method">
+                                    <strong>Metodo de Pago:</strong>
+                                </td>
+                                <td>
+                                    <p t-out="cfdi_values.get('payment_method')">PUE</p>
+                                </td>
+                            </tr>
+                         </table> 
 
                         <t t-set="display_discount" t-value="any(l.discount for l in o.invoice_line_ids)"/>
                         <div class="oe_structure"></div>
@@ -136,7 +150,7 @@
                                         <t t-if="line.display_type == 'product'" name="account_invoice_line_accountable">
                                             <td name="account_invoice_line_name"><span t-if="line.name" t-field="line.name" t-options="{'widget': 'text'}">Bacon Burger</span></td>
                                             <td name="td_quantity" class="text-end">
-                                                <span t-field="line.quantity">3.00</span>
+                                                <span t-field="line.quantity" t-options="{'widget': 'integer'}">3.00</span>
                                                 <span t-field="line.product_uom_id"  groups="uom.group_uom">units</span>
                                             </td>
                                             <td name="td_price_unit" t-attf-class="text-end {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
