@@ -27,6 +27,17 @@
             </field>
         </record>
 
+        <record id="sale_order_tree" model="ir.ui.view">
+            <field name="name">sale.order.tree</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_tree"/>
+            <field name="arch" type="xml">
+                 <xpath expr="//field[@name='amount_total']" position="before">
+                    <field name="qty_pieces"/>
+                </xpath>
+            </field>
+        </record>
+
         <record id="sale_margin_sale_order_matex" model="ir.ui.view">
             <field name="name">sale.order.margin.view.form.matex</field>
             <field name="model">sale.order</field>
