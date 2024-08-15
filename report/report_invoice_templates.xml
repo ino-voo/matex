@@ -68,7 +68,13 @@
                             <span t-if="o.name != '/'" t-field="o.name">INV/2023/0001</span>
                         </h2>
                         <div class="oe_structure"></div>
-                        
+
+                        <!-- Only for not broke inherence -->
+                        <div t-attf-class="#{'col-auto col-3 mw-100' if report_type != 'html' else 'col'} mb-2" t-if="o.partner_id.ref" name="customer_code">
+                            <strong>Customer Code:</strong><br/>
+                            <span t-field="o.partner_id.ref"/>
+                        </div>
+
                         <t t-set="cfdi_values" t-value="o._l10n_mx_edi_get_extra_invoice_report_values()"/>        
                         <table class="table table-sm o_main_table table-borderless" name="invoice_line_table">
                             <tr>
