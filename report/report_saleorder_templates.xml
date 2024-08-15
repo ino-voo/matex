@@ -151,6 +151,9 @@
                         </tbody>
                     </table>
                     <div class="clearfix" name="so_total_summary">
+                    
+                        Piezas: <span t-out="doc.qty_pieces">31.05</span>
+
                         <div id="total" class="row" name="total">
                             <div t-attf-class="#{'col-6' if report_type != 'html' else 'col-sm-7 col-md-6'} ms-auto">
                                 <table class="table table-sm table-borderless">
