@@ -96,5 +96,16 @@ class PurchaseOrder(models.Model):
                                 [[['id', '=', sale_order_id], ['company_id', '=', 1]]])
 
         _logger.info('Sale: %s' % sale)
+        
+
+        template = self.env.ref('purchase.email_template_edi_purchase', raise_if_not_found=False)
+        if template:
+            orders = self
+            for order in orders:
+                order.with_context(is_reminder=True).message_post_with_source(
+                    template,
+                    email_layout_xmlid="mail.mail_notification_layout_with_responsible_signature",
+                    subtype_xmlid='mail.mt_comment')
+
         self.write({'partner_ref': sale[0]['name'], 'api_send': True})
         self.message_post(body=_('Se ha creado la orden de venta %s') % sale[0]['name'])
