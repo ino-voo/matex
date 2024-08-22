@@ -37,6 +37,10 @@ class PurchaseOrder(models.Model):
             raise UserError(_('El partner debe tener el RFC %s') % 'SPS0904307J9')
 
         purchase_order_id = self
+        
+        sales = purchase_order_id._get_sale_orders()
+        sale_origin = sales.client_order_ref
+
         purchase_partner = self.company_id
 
         purchase_order_lines = self.env['purchase.order.line'].search([('order_id', '=', purchase_order_id.id)])
@@ -84,7 +88,7 @@ class PurchaseOrder(models.Model):
         # Create the sale order
         sale_order_id = models.execute_kw(db, uid, password, 'sale.order', 'create', [{
             'partner_id': partner_id,
-            'client_order_ref': purchase_order_id.name,
+            'client_order_ref': sale_origin,
             'partner_invoice_id': partner_id,
             'order_line': sale_order_lines,
             'company_id': 1  # Ensuring the sale order is created for the correct company
